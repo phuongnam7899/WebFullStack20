@@ -1,0 +1,34 @@
+
+.a {
+    color: black;
+}
+#top {
+    color : green;
+}
+[type] {
+    color : violet;
+}
+[type="text"]{
+    color: aqua;
+}
+
+/* relationship selector */
+/* and */
+h1,h2 {
+    color: brown;
+}
+/* child */
+ul li {
+    color: gray;
+}
+/* direct child */
+ul > li{
+    color: aliceblue;
+}
+
+/* pseodo */
+p:hover {background-color: blue;}
+input:active{background-color: blue;}
+input:focus{background-color: blue;}
+
+ 

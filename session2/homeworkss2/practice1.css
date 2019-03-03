@@ -9,7 +9,7 @@
     width: 100px;
 }
 .menu2 span{
-    border-bottom: 1px solid white;
+    margin-bottom: 1px solid white;
 }
 .menu1 > span , .menu2 > span{
     display: inline-block;
