@@ -1,0 +1,36 @@
+body{
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+    font-size: 0.7em;
+    text-align: center;
+}
+.center{
+    display: flex;
+}
+
+.header {
+    background-color: #0000ff;
+}
+
+.nav {
+    display: flex;
+    justify-content: center;
+    background-color: #800080;
+}
+
+.main {
+    background-color: #ffd700;
+    width: 75%;
+}
+
+.aside {
+    background-color: #808080;
+    width: 25%;
+    align-self: flex-end;
+    height: 190px;
+}
+
+.footer {
+    background-color: #00ffff;
+}
