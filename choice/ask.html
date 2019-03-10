@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <nav>
+        <a href="/ask">Ask</a>
+        <a href="#">Answer</a>
+    </nav>
+    <form action="http://localhost:6969/addquestion" method="POST">
+        <textarea id="question-input" name="question" oninput="limitText(this.form.question,this.form.countdown,200);" 
+                 cols="30" rows="10">
+        </textarea>
+        <p id="remain"></p>
+        <button type="submit">Submit</button>
+    </form>
+    <script type="text/javascript">
+
+        const questionInputElement = document.querySelector('#question-input');
+        questionInputElement.addEventListener("keyup",() => {
+        const remainChar = 200 - questionInputElement.value.length;
+        document.querySelector('#remain').innerText = remainChar + "/200 character left";
+       })
+
+        function limitText(limitField, limitCount, limitNum) {
+            if (limitField.value.length > limitNum) {
+                limitField.value = limitField.value.substring(0, limitNum);
+            } else {
+                limitCount.value = limitNum - limitField.value.length;
+            }
+        }
+
+    </script>
+</body>
+</html>
