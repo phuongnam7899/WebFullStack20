@@ -11,6 +11,8 @@ app.get("/",(req,res) => {
     <h1>${question}</h1>
     <button><a href="/">yes</a></button>
     <button><a href="/">no</a></button>
+    <button><a href="/">vote result</a></button>
+    <button><a href="/">other question</a></button>
     `);
 });
 app.use(bodyParser.urlencoded({extended : false}));
