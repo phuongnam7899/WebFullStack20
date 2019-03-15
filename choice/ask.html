@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <script
+    src="http://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
 </head>
 <body>
     <nav>
@@ -19,14 +23,12 @@
         <button type="submit">Submit</button>
     </form>
     <script type="text/javascript">
-
+        function limitText(limitField, limitCount, limitNum) {
         const questionInputElement = document.querySelector('#question-input');
         questionInputElement.addEventListener("keyup",() => {
         const remainChar = 200 - questionInputElement.value.length;
         document.querySelector('#remain').innerText = remainChar + "/200 character left";
        })
-
-        function limitText(limitField, limitCount, limitNum) {
             if (limitField.value.length > limitNum) {
                 limitField.value = limitField.value.substring(0, limitNum);
             } else {

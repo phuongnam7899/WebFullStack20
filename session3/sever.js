@@ -6,7 +6,6 @@ const path = require("path");
 app.use(express.static('public'));
 
 app.get("/",function(request,respond){
-    console.log("hello");
     // respond.send("<h1>hello boy</h1>");
     respond.sendFile(path.resolve(__dirname, "../session2/index.html"));
 });
