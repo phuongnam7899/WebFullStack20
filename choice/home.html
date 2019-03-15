@@ -22,8 +22,8 @@
 	<a href="#" id="yes">
 		<button>Đúng/Có/Phải</button>
 	</a>
-	<button id="vote-result">Kết quả vote</button>
-	<button>Câu hỏi khác</button>
+	<a href="#" id="vote-result"><button>Kết quả vote</button></a>
+	<a href="/"><button>Câu hỏi khác</button></a>
 
 
 	<script>
@@ -33,22 +33,11 @@
 			success: function (questionData) {
 				console.log(questionData)
 				$('h1').text(questionData.content);
-				$('#yes').attr("href", `/vote/${questionData.id}/yes`);
-				$('#no').attr("href", `/vote/${questionData.id}/no`);
 				question = questionData;
+				$('#yes').attr("href", `/vote/${question.id}/yes`);
+				$('#no').attr("href", `/vote/${question.id}/no`);
+				$('#vote-result').attr("href", `/question/${question.id}`);
 			}
-		});
-
-		$("#yes,#no,#vote-result").on("click", function () {
-			$.ajax({
-				url: '/vote-result',
-				type: "POST",
-				data: question,
-				success: function () {
-					window.location.href = "/vote-result";
-				}
-			});
-
 		});
 	</script>
 </body>

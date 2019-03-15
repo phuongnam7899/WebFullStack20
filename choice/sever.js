@@ -52,32 +52,30 @@ app.get("/vote/:questionId/yes", (req, res) => {
 	const questionId = req.params.questionId;
 	const question =questionList[questionId];
 	question.yes += 1;
-	console.log(questionList[questionId]);
 	fs.writeFileSync("question.json", JSON.stringify(questionList));
-	res.redirect("/vote-result");
+	res.redirect(`/question/${questionId}`);
 });
 app.get("/vote/:questionId/no", (req,res) => {
 	const questionList = JSON.parse(fs.readFileSync("question.json","utf-8"));
 	const questionId = req.params.questionId;
 	const question = questionList[questionId];
 	question.no += 1;
+	const yesRate = Math.round((question.yes / (question.yes + question.no))*100);
+	const noRate = 100 - yesRate;
 	fs.writeFileSync("question.json", JSON.stringify(questionList));
-	res.redirect("/vote-result");
+	res.redirect(`/question/${questionId}`);
+});
+
+app.get("/question/:questionId",(req,res) =>{
+	const questionList = JSON.parse(fs.readFileSync("question.json", "utf-8"));
+	const quesId = req.params.questionId;
+	const ques = questionList[quesId];
+	const quesContent = ques.content;
+	const yesRate = Math.round((ques.yes / (ques.yes + ques.no))*100);
+	const noRate = 100 - yesRate;
+	res.send(`Question : ${quesContent},Yes : ${yesRate}%,No : ${noRate}%`);
 })
 
-app.post("/vote-result", (req,res) => {
-	const questionList = JSON.parse(fs.readFileSync("question.json","utf-8"));
-	const question = req.body;
-	votedQuestion = questionList[question.id];
-	yesRate = Math.round((votedQuestion.yes / (votedQuestion.yes + votedQuestion.no))*100);
-	noRate = 100 - yesRate;
-	res.redirect("/vote-result");
-})
-
-app.get("/vote-result", (req,res) => {
-	res.send(`Yes : ${yesRate}%
-	No : ${noRate}%`);
-})
 
 
 app.listen(6969, (err) => {
