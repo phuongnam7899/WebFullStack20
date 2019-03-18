@@ -34,9 +34,9 @@
 				console.log(questionData)
 				$('h1').text(questionData.content);
 				question = questionData;
-				$('#yes').attr("href", `/vote/${question.id}/yes`);
-				$('#no').attr("href", `/vote/${question.id}/no`);
-				$('#vote-result').attr("href", `/question/${question.id}`);
+				$('#yes').attr("href", `/vote/${question._id}/yes`);
+				$('#no').attr("href", `/vote/${question._id}/no`);
+				$('#vote-result').attr("href", `/question/${question._id}`);
 			}
 		});
 	</script>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=h1, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <h1 id="question">question</h1>
+    <h2 id="total">total</h2>
+    <h2 id="yes">yes</h2>
+    <h2 id="no">no</h2>
+    <a href="/"><button>other question</button></a>
+    <script>
+        const questionId = window.location.pathname.split('/')[2];
+        $.ajax({
+            url: `/detail/${questionId}`,
+            type: "GET",
+            success: function (question) {
+                $("#question").text(question.content);
+                const total = question.yes + question.no;
+                $("#total").text(`Total votes : ${total}`);
+                if (total === 0) {
+                    $("#yes").text(`Yes rate : 0%`);
+                    $("#no").text(`No rate : 0%`);
+                } else {
+                    $("#yes").text(
+                        `Yes rate : ${Math.round((question.yes / (question.yes + question.no))*100)}%`);
+                    $("#no").text(
+                        `No rate : ${Math.round((question.no / (question.yes + question.no))*100)}%`);
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
