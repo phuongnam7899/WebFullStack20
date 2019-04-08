@@ -41,8 +41,7 @@
             });
         });
         $(window).scroll(function () {
-            console.log($(document).height() - $(window).height() - $(window).scrollTop());
-            if (($(document).height() - $(window).height() - $(window).scrollTop() < 500) & preLoad === true) {
+            if (($(document).height() - ($(window).height() + $(window).scrollTop()) < 1000) & preLoad) {
                 preLoad = false;
                 $.ajax({
                     url: nextUrl,
@@ -54,10 +53,11 @@
                                 `
                                 <img src="${resultt[i].visible_instructors[0].image_50x50}" alt="" id="img">
                                 <p>Title: ${resultt[i].title} </p>
-                                <p>Price : ${resultt[i].price}</p>`;
+                                <p>Price : ${resultt[i].price}</p>
+                                `;
                             $("#content").append(htmll);
-                            preLoad = true;
                         };
+                        preLoad = true;
                     }
                 });
             }

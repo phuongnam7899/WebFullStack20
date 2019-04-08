@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h3 class="border-bottom my-4"><b>ScoreKeeper</b></h3>
+        <div class="row mt-2">
+            <div class="col">
+                <input class="form-control border border-danger" type="text" id="player1" name="pl1"
+                    placeholder="Player1...">
+
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col">
+                <input class="form-control border border-danger" type="text" id="player2" name="pl2"
+                    placeholder="Player2...">
+
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col">
+                <input class="form-control border border-danger" type="text" id="player3" name="pl1"
+                    placeholder="Player3...">
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col">
+                <input class="form-control border border-danger" type="text" id="player4" name="pl1"
+                    placeholder="Player4...">
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col text-center btn btn-lg">
+                <a href="#" id="submit"><button class="btn btn-danger" type="button">CREATE NEW GAME</button></a> </div>
+        </div>
+
+    </div>
+
+
+
+
+
+    <script>
+        $("button").on("click", () => {
+            $("#submit").attr("href",
+                `/saveplayer/query?pl1=${$("#player1").val()}&pl2=${$("#player2").val()}&pl3=${$("#player3").val()}&pl4=${$("#player4").val()}`
+            )
+        })
+    </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="container">
+        <form id="form" action="#" method="POST">
+            <h3><b>ScoreKeeper</b></h3>
+            <table class="table table-striped border-bottom border-danger">
+                <thead>
+                </thead>
+                <tbody>
+                    <tr id="sum" class="text-light" style="background-color:#BF1363">
+                        <th scope="row">Sum of Score(0)</th>
+                        <td id="sum1"></td>
+                        <td id="sum2"></td>
+                        <td id="sum3"></td>
+                        <td id="sum4"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="text-center">
+                <button class="btn" style="background-color:#BF1363" type="button" id="add-round">Add round</button>
+            </div>
+            <p id="message"></p>
+        </form>
+    </div>
+
+
+    <script>
+        $(document).ready(() => {
+            const dHrefSplit = document.location.href.split("/");
+            const gameId = dHrefSplit[dHrefSplit.length - 1];
+            let roundCount = 0;
+            const updateSum = function () {
+                $.ajax({
+                    url: `/gameInfo/${gameId}`,
+                    type: "GET",
+                    success: (data) => {
+                        let player1Sum = 0;
+                        let player2Sum = 0;
+                        let player3Sum = 0;
+                        let player4Sum = 0;
+                        const player1Score = data.player1.roundScore;
+                        const player2Score = data.player2.roundScore;
+                        const player3Score = data.player3.roundScore;
+                        const player4Score = data.player4.roundScore;
+                        for (let i = 0; i < player1Score.length; i++) {
+                            player1Sum += Number(player1Score[i]);
+                        }
+                        for (let i = 0; i < player2Score.length; i++) {
+                            player2Sum += Number(player2Score[i]);
+                        }
+                        for (let i = 0; i < player3Score.length; i++) {
+                            player3Sum += Number(player3Score[i]);
+                        }
+                        for (let i = 0; i < player4Score.length; i++) {
+                            player4Sum += Number(player4Score[i]);
+                        }
+                        console.log(player1Sum)
+                        $("#sum1").text(`${player1Sum}`);
+                        $("#sum2").text(`${player2Sum}`);
+                        $("#sum3").text(`${player3Sum}`);
+                        $("#sum4").text(`${player4Sum}`);
+
+                    }
+                })
+            }
+            const addRound = function (row, p1, p2, p3, p4) {
+                const round = `
+            <tr>
+                <th scope="row">Round ${row}</th>
+                <td>
+                    <input class="rounded col-3" value=${p1} class="target" name=p1[]></input>
+                </td>
+                <td>
+                        <input class="rounded col-3" value=${p2} class="target" name=p2[]></input>
+                </td>
+                <td>
+                        <input class="rounded col-3" value=${p3} class="target" name=p3[]></input>
+                </td>
+                <td>
+                        <input class="rounded col-3" value=${p4} class="target" name=p4[]></input>
+                </td>
+            </tr>
+            `
+                $("tbody").append(round)
+            };
+
+            $("form").attr("action", `/saveGame/${gameId}`)
+
+
+            $.ajax({
+                url: `/gameInfo/${gameId}`,
+                type: "GET",
+                success: (data) => {
+                    updateSum();
+                    roundCount = data.player1.roundScore.length;
+                    const player1Score = data.player1.roundScore;
+                    const player2Score = data.player2.roundScore;
+                    const player3Score = data.player3.roundScore;
+                    const player4Score = data.player4.roundScore;
+                    const field = `
+                <tr id="field">
+                    <th scope="col"></th>
+                    <th scope="col">${data.player1.name}</th>
+                    <th scope="col">${data.player2.name}</th>
+                    <th scope="col">${data.player3.name}</th>
+                    <th scope="col">${data.player4.name}</th>
+                </tr>
+                `
+                    $("thead").append(field);
+
+                    for (let i = 1; i <= roundCount; i++) {
+                        addRound(i, player1Score[i - 1], player2Score[i - 1], player3Score[i - 1],
+                            player4Score[
+                                i - 1]);
+                    }
+                }
+            });
+
+
+
+            // $('input[class="target"]').trigger("change",function () {
+            //     alert("Handler for .change() called.");
+            // });
+            $(document).on("change", "input", (function () {
+                $("form").submit();
+
+                setTimeout(() => {
+                    updateSum();
+                }, 1000);
+            }))
+
+
+
+            $("#add-round").on("click", () => {
+                roundCount++;
+                addRound(roundCount, 0, 0, 0, 0);
+            });
+        });
+    </script>
+</body>
+
+</html>
