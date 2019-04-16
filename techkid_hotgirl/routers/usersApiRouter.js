@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router;
-
+const bcrypt = require("bcryptjs");
 const usersApiRouter = router();
 const userModel = require("../models/users");
 
@@ -8,10 +8,14 @@ const userModel = require("../models/users");
 
 usersApiRouter.post("/", (req, res) => {
     const userData = req.body;
+    const hashPassword = bcrypt.hashSync(userData.password,10);
     const newUser = new userModel({
         name: userData.name,
-        password: userData.password,
-        account: userData.account
+        password: hashPassword,
+        account: userData.account,
+        gender: userData.gender,
+        location: userData.location,
+        dob: userData.dob,
     });
     newUser.save((err) => {
         if(err) res.send(err);

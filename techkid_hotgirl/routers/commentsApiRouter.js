@@ -6,10 +6,9 @@ const commentModel = require("../models/comments");
 commentsApiRouter.post("/", (req,res) => {
     const commentData = req.body;
     const newComment = new commentModel({
-        url :commentData.url,
-        description : commentData.description,
-        title: commentData.title,
-        userId : commentData.userId,
+        user : commentData.userId,
+        content : commentData.content,
+        image : commentData.imageId,
     });
     newComment.save((err) => {
         if(err) res.send(err);

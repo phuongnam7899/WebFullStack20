@@ -7,7 +7,7 @@ const ImageSchema = new Schema({
     like : {type: Number,default: 0},
     description : {type: String},
     title: {type: String},
-    userId :{ type: mongoose.Types.ObjectId, ref: "User"},
+    user :{ type: mongoose.Types.ObjectId, ref: "user"},
     
 
 }); 

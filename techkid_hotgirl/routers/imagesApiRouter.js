@@ -3,50 +3,80 @@ const Router = express.Router;
 const imagesApiRouter = Router();
 const ImageModel = require("../models/images");
 
-imagesApiRouter.post("/", (req,res) => {
+imagesApiRouter.post("/", (req, res) => {
     const imageData = req.body;
     const newImage = new ImageModel({
-        url : imageData.url,
-        description : imageData.description,
+        url: imageData.url,
+        description: imageData.description,
         title: imageData.title,
-        userId : imageData.userId,
+        user: imageData.user,
     });
-    newImage.save((err) => {
-        if(err) res.send(err);
-        else res.send(newImage);
-    })
+    newImage.save()
+        .then((imageSaved) => {
+            res.send(imageSaved);
+        })
+        .catch((err) => {
+            res.send(err);
+        })
 });
 
-imagesApiRouter.get("/", (req,res) => {
-    ImageModel.find({}, (err,imagesData) => {
-        if(err) console.log(err);
-        else res.send(imagesData)
-    })
+imagesApiRouter.get("/", (req, res) => {
+    const limit = req.query.perPage || 5;
+    const page = req.query.page || 1;
+    const skip = limit * (page - 1);
+    ImageModel.find({})
+        .populate({
+            path: "user",
+            select: "name account"
+        })
+        .limit(limit)
+        .skip(skip)
+        .then( (images) => {
+            res.send(images);
+        })
+        .catch( (err) => {
+            res.send(err);
+        })
 });
 
-imagesApiRouter.get("/:id", (req,res) => {
-    ImageModel.findById(req.params.id, (err,imageData) => {
-        if(err) console.log(err);
-        else res.send(imageData);
-    })
+imagesApiRouter.get("/:id", (req, res) => {
+    ImageModel.findById(req.params.id)
+        .populate({
+            path: "user",
+            select: "name account"
+        })
+        .then( (image) => {
+            res.send(image);
+        })
+        .catch((err) => {
+            res.send(err);
+        })
 });
 
-imagesApiRouter.put("/:id", (req,res) => {
-    ImageModel.updateOne({_id : req.params.id}, {
-        url : req.body.url ,
-        views : req.body.views ,
-        like : req.body.like,
-        description : req.body.description,
-        title: req.body.title,
-    }
-)});
+imagesApiRouter.put("/:id", (req, res) => {
+    ImageModel.findById(req.params.id)
+        .then((imageFound) => {
+            for (let key in req.body) {
+                if (imageFound[key] !== undefined) {
+                    imageFound[key] = req.body[key];
+                }
+            }
+            return imageFound.save()
+        }).then((imageSaved) => {
+            res.send(imageSaved);
+        }).catch((err) => {
+            res.send(err);
+        })
+});
 
-imagesApiRouter.delete("/:id", (req,res) => {
-    ImageModel.deleteOne({_id : req.params.id}, (err) = {
-        if(err) {
-            console.log(err);
-        }
-    })
+imagesApiRouter.delete("/:id", (req, res) => {
+    ImageModel.deleteOne({ _id: req.params.id })
+        .then(() => {
+            res.send("deleted");
+        })
+        .catch((err) => {
+            res.send(err);
+        })
 });
 
 module.exports = imagesApiRouter;

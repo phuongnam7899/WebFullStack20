@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const CommentSchema = new Schema({
-    imageId : {type: mongoose.Types.ObjectId, ref: "Image"},
-    userId : {type: mongoose.Types.ObjectId, ref: "User"},
+    image : {type: mongoose.Types.ObjectId, ref: "image"},
+    user : {type: mongoose.Types.ObjectId, ref: "user"},
     content : {type: String}, 
 })
 
