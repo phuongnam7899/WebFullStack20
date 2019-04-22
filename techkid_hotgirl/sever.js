@@ -28,8 +28,10 @@ app.use(session({
 	}
 }));
 
+
+//middleware
 app.use((req,res,next) => {
-	req.session.user = "aaaaaa";
+	console.log("session", req.session.userAccount)
 	console.log("sessionID", req.sessionID);
 	next();
 })

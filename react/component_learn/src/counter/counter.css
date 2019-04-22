@@ -1,0 +1,12 @@
+.point {
+    width: 23px;
+    height: 24px;
+    font-size: 20px;
+    color: #000000;
+    text-align: center;
+    margin: 10px 8px 0px 8px;
+}
+.counter{
+    display: flex;
+    flex-direction: row; 
+}

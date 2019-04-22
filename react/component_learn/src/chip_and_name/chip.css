@@ -1,0 +1,25 @@
+.chip-background {
+    width: 80px;
+    height: 32px;
+    background-color:#0FB600;
+    border-radius: 16px;
+    margin-top : 8px;
+}
+
+.chip-text {
+    text-align: center;
+    line-height: 32px;
+    color: #ffffff;
+    font-size: 14px;
+}
+
+.red {
+    background-color:red;
+}
+
+.gray {
+    background-color:gray;
+}
+.green{
+    background-color: #0FB600;
+}
